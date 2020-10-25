@@ -49,14 +49,23 @@ public class IPLAnalyser {
 		return bowlingList.size();
 	}
 
-	public List<Batting> getSortedList(FlexibleSort.Order order) throws IPLAnaylserException {
-		if (battingList == null || battingList.size() == 0) {
-			throw new IPLAnaylserException("No batting list data", IPLAnaylserException.ExceptionType.NO_DATA);
-		}
+	public <T> List<T> getSortedList(FlexibleSort.Order order, String playerType) throws IPLAnaylserException {
 		FlexibleSort flexibleSort = new FlexibleSort(order);
-		List<Batting> sortedBattingList = battingList;
-		Collections.sort(sortedBattingList, flexibleSort);
-		System.out.println(sortedBattingList);
-		return sortedBattingList;
+		List<T> sortedList;
+		if (playerType.equals("Batsman")) {
+			if (battingList == null || battingList.size() == 0)
+				throw new IPLAnaylserException("No batting list data", IPLAnaylserException.ExceptionType.NO_DATA);
+			sortedList = (List<T>) battingList;
+		}
+		else if(playerType.equals("Bowler")) {
+			if (bowlingList == null || bowlingList.size() == 0)
+				throw new IPLAnaylserException("No bowling list data", IPLAnaylserException.ExceptionType.NO_DATA);
+			sortedList = (List<T>) bowlingList;
+		}
+		else 
+			throw new IPLAnaylserException("Wrong player type",IPLAnaylserException.ExceptionType.WRONG_PLAYER_TYPE);
+		Collections.sort(sortedList, flexibleSort);
+		System.out.println(sortedList);
+		return sortedList;
 	}
 }
