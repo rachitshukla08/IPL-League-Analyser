@@ -83,4 +83,10 @@ public class IPLAnalyserTest
 		sortedBowlingList = iplAnalyser.getSortedList(FlexibleSort.Order.BOWL_AVG,"Bowler");
 		assertEquals("11", sortedBowlingList.get(0).getAvg());
 	}
+	
+	@Test
+	public void givenBowlingData_WhenSortedByStrikeRate_ShouldReturnBestStrikeRateFirst() throws IPLAnaylserException {
+		sortedBowlingList = iplAnalyser.getSortedList(FlexibleSort.Order.BOWL_SR,"Bowler");
+		assertEquals("8.66", sortedBowlingList.get(0).getStrikeRate());
+	}
 }
