@@ -52,7 +52,7 @@ public class IPLAnalyser {
 		return bowlingList.size();
 	}
 	
-	public List<Batting> getSortedData(FlexibleSort.Order order) throws IPLAnaylserException {
+	public List<Batting> getSortedList(FlexibleSort.Order order) throws IPLAnaylserException {
 		if(battingList==null||battingList.size()==0) {
 			throw new IPLAnaylserException("No batting list data",IPLAnaylserException.ExceptionType.NO_DATA);
 		}

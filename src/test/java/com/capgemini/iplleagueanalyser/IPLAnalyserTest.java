@@ -40,15 +40,22 @@ public class IPLAnalyserTest
 	@Test
 	public void givenBattingData_WhenSortedByAvg_ShouldReturnHighestAvgFirst() throws IPLAnaylserException {
 		iplAnalyser.loadBattingData(BATTING_DATA_PATH);
-		sortedBattingList = iplAnalyser.getSortedData(FlexibleSort.Order.AVG);
+		sortedBattingList = iplAnalyser.getSortedList(FlexibleSort.Order.AVG);
 		assertEquals("83.2", sortedBattingList.get(0).getAvg());
 	}
 	
 	@Test
 	public void givenBattingData_WhenSortedBySR_ShouldReturnHighestSRFirst() throws IPLAnaylserException {
-		String sortedBattingData = "";
 		iplAnalyser.loadBattingData(BATTING_DATA_PATH);
-		sortedBattingList = iplAnalyser.getSortedData(FlexibleSort.Order.SR);
+		sortedBattingList = iplAnalyser.getSortedList(FlexibleSort.Order.SR);
 		assertEquals("333.33", sortedBattingList.get(0).getStrikeRate());
+	}
+	
+	@Test
+	public void givenBattingData_WhenSortedByBoundaries_ShouldReturnHighestTotalBoundaries() throws IPLAnaylserException {
+		iplAnalyser.loadBattingData(BATTING_DATA_PATH);
+		sortedBattingList = iplAnalyser.getSortedList(FlexibleSort.Order.BOUNDARIES);
+		int totalBoundaries = Integer.parseInt(sortedBattingList.get(0).getFours())+Integer.parseInt(sortedBattingList.get(0).getSixes());
+		assertEquals(83, totalBoundaries);
 	}
 }
