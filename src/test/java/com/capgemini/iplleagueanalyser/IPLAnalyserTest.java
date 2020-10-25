@@ -58,4 +58,11 @@ public class IPLAnalyserTest
 		int totalBoundaries = Integer.parseInt(sortedBattingList.get(0).getFours())+Integer.parseInt(sortedBattingList.get(0).getSixes());
 		assertEquals(83, totalBoundaries);
 	}
+	
+	@Test
+	public void givenBattingData_WhenSortedByStrikeRateAndBoundaries_ShouldReturnProperList() throws IPLAnaylserException {
+		iplAnalyser.loadBattingData(BATTING_DATA_PATH);
+		sortedBattingList = iplAnalyser.getSortedList(FlexibleSort.Order.SR_AND_BOUNDARIES);
+		assertEquals("Ishant Sharma", sortedBattingList.get(0).getPlayer());
+	}
 }
