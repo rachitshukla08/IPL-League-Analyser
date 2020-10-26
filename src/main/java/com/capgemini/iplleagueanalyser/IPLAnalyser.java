@@ -19,35 +19,31 @@ public class IPLAnalyser {
 	List<Batting> battingList;
 	List<Bowling> bowlingList;
 
-	public int loadBattingData(String battingDataPath) throws IPLAnaylserException {
-		try (Reader reader = Files.newBufferedReader(Paths.get(battingDataPath));) {
+	public int loadData(String dataPath,String fileType) throws IPLAnaylserException {
+		try (Reader reader = Files.newBufferedReader(Paths.get(dataPath));) {
 			ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
-			try {
-				battingList = csvBuilder.getCSVFileList(reader, Batting.class);
-			} catch (CsvException e) {
-				throw new IPLAnaylserException("Invalid class", IPLAnaylserException.ExceptionType.INVALID_CLASS_TYPE);
+			if(fileType.equals("Batting")) {
+				try {
+					battingList = csvBuilder.getCSVFileList(reader, Batting.class);
+					return battingList.size();
+				} catch (CsvException e) {
+					throw new IPLAnaylserException("Invalid class", IPLAnaylserException.ExceptionType.INVALID_CLASS_TYPE);
+				}
 			}
+			if(fileType.equals("Bowling")) {
+				try {
+					bowlingList = csvBuilder.getCSVFileList(reader, Bowling.class);
+					return bowlingList.size();
+				} catch (CsvException e) {
+					throw new IPLAnaylserException("Invalid class", IPLAnaylserException.ExceptionType.INVALID_CLASS_TYPE);
+				}
+			}
+			else 
+				throw new IPLAnaylserException("No such file",IPLAnaylserException.ExceptionType.NO_DATA);
 		} catch (IOException e) {
 			throw new IPLAnaylserException("Invalid file location",
 					IPLAnaylserException.ExceptionType.INVALID_FILE_PATH);
 		}
-		return battingList.size();
-	}
-
-	public int loadBowlingData(String bowlingDataPath) throws IPLAnaylserException {
-		try (Reader reader = Files.newBufferedReader(Paths.get(bowlingDataPath));) {
-			ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
-			try {
-				bowlingList = csvBuilder.getCSVFileList(reader, Bowling.class);
-			} catch (CsvException e) {
-				throw new IPLAnaylserException("Invalid class", IPLAnaylserException.ExceptionType.INVALID_CLASS_TYPE);
-			}
-
-		} catch (IOException e1) {
-			throw new IPLAnaylserException("Invalid file location",
-					IPLAnaylserException.ExceptionType.INVALID_FILE_PATH);
-		}
-		return bowlingList.size();
 	}
 
 	public <T> List<T> getSortedList(FlexibleSort.Order order, String playerType) throws IPLAnaylserException {
