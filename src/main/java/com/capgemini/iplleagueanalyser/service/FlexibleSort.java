@@ -8,7 +8,7 @@ import com.capgemini.iplleagueanalyser.model.Bowling;
 
 public class FlexibleSort <T> implements Comparator<T> {
 	public enum Order {
-		BAT_AVG, BAT_SR, BOUNDARIES, SR_AND_BOUNDARIES, AVG_AND_SR, RUNS_AND_AVG, BOWL_AVG, BOWL_SR
+		BAT_AVG, BAT_SR, BOUNDARIES, SR_AND_BOUNDARIES, AVG_AND_SR, RUNS_AND_AVG, BOWL_AVG, BOWL_SR, ECONOMY
 	}
 
 	public Order sortingBy;
@@ -77,12 +77,18 @@ public class FlexibleSort <T> implements Comparator<T> {
 		case BOWL_AVG:
 			if(bowl1.getAvg().contains("-"))
 				bowl1.setAvg("999999");
-			return (int) (Double.parseDouble(bowl1.getAvg()) - Double.parseDouble((bowl2.getAvg())));
+			value= setValue(Double.parseDouble(bowl1.getAvg()) - Double.parseDouble((bowl2.getAvg())));
+			return (int) value;
 		
 		case BOWL_SR:
 			if(bowl1.getStrikeRate().contains("-"))
 				bowl1.setStrikeRate("999999");
-			return (int) (Double.parseDouble(bowl1.getStrikeRate()) - Double.parseDouble((bowl2.getStrikeRate())));
+			value =  setValue(Double.parseDouble(bowl1.getStrikeRate()) - Double.parseDouble((bowl2.getStrikeRate())));
+			return (int) value;
+			
+		case ECONOMY:
+			value =  setValue(Double.parseDouble(bowl1.getEconomy()) - Double.parseDouble((bowl2.getEconomy())));
+			return (int) value;
 		}
 		return 0;
 	}
