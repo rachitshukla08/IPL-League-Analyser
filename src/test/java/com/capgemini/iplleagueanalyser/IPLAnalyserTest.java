@@ -104,4 +104,11 @@ public class IPLAnalyserTest
 		sortedBowlingList = iplAnalyser.getSortedList(FlexibleSort.Order.ECONOMY,"Bowler");
 		assertEquals("4.8", sortedBowlingList.get(0).getEconomy());
 	}
+	
+	@Test
+	public void givenBowlingData_WhenSortedBySRandEcon_ShouldReturnBestSortedList() throws IPLAnaylserException {
+		iplAnalyser.loadBowlingData(BOWLING_DATA_PATH);
+		sortedBowlingList = iplAnalyser.getSortedList(FlexibleSort.Order.BOWL_SR_AND_ECON,"Bowler");
+		assertEquals("8.66", sortedBowlingList.get(0).getStrikeRate());
+	}
 }

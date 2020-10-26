@@ -8,7 +8,8 @@ import com.capgemini.iplleagueanalyser.model.Bowling;
 
 public class FlexibleSort <T> implements Comparator<T> {
 	public enum Order {
-		BAT_AVG, BAT_SR, BOUNDARIES, SR_AND_BOUNDARIES, AVG_AND_SR, RUNS_AND_AVG, BOWL_AVG, BOWL_SR, ECONOMY
+		BAT_AVG, BAT_SR, BOUNDARIES, SR_AND_BOUNDARIES, AVG_AND_SR, RUNS_AND_AVG, BOWL_AVG, BOWL_SR, ECONOMY,
+		BOWL_SR_AND_ECON
 	}
 
 	public Order sortingBy;
@@ -34,11 +35,11 @@ public class FlexibleSort <T> implements Comparator<T> {
 		case BAT_AVG:
 			if ((bat1).getAvg().contains("-"))
 				bat1.setAvg("0");
-			return (int) (Double.parseDouble(bat2.getAvg()) - Double.parseDouble((bat1.getAvg())));
+			return (int) setValue(Double.parseDouble(bat2.getAvg()) - Double.parseDouble((bat1.getAvg())));
 		case BAT_SR:
 			if (bat1.getStrikeRate().contains("-"))
 				bat1.setStrikeRate("0");
-			return (int) (Double.parseDouble(bat2.getStrikeRate()) - Double.parseDouble((bat1.getStrikeRate())));
+			return (int) setValue(Double.parseDouble(bat2.getStrikeRate()) - Double.parseDouble((bat1.getStrikeRate())));
 		case BOUNDARIES:
 			return (Integer.parseInt(bat2.getFours()) + Integer.parseInt(bat2.getSixes()))
 					- (Integer.parseInt(bat1.getFours()) + Integer.parseInt(bat1.getSixes()));
@@ -57,11 +58,10 @@ public class FlexibleSort <T> implements Comparator<T> {
 		case AVG_AND_SR:
 			if (bat1.getAvg().contains("-"))	
 				bat1.setAvg("0");
-			value = Double.parseDouble(bat2.getAvg()) - Double.parseDouble((bat1.getAvg()));
+			value = setValue(Double.parseDouble(bat2.getAvg()) - Double.parseDouble((bat1.getAvg())));
 			if (value == 0) {
-				return (int) (Double.parseDouble(bat2.getStrikeRate()) - Double.parseDouble((bat1.getStrikeRate())));
+				return (int) setValue(Double.parseDouble(bat2.getStrikeRate()) - Double.parseDouble((bat1.getStrikeRate())));
 			} 
-			value = setValue(value);
 			return (int) value;
 		
 		case RUNS_AND_AVG:
@@ -69,9 +69,8 @@ public class FlexibleSort <T> implements Comparator<T> {
 				bat1.setAvg("0");
 			value = Integer.parseInt(bat2.getRuns()) - Integer.parseInt(bat1.getRuns());
 			if (value == 0) {
-				return (int) (Double.parseDouble(bat2.getAvg()) - Double.parseDouble((bat1.getAvg())));
+				return (int) setValue(Double.parseDouble(bat2.getAvg()) - Double.parseDouble((bat1.getAvg())));
 			} 
-			value = setValue(value);
 			return (int) value;
 			
 		case BOWL_AVG:
@@ -88,6 +87,17 @@ public class FlexibleSort <T> implements Comparator<T> {
 			
 		case ECONOMY:
 			value =  setValue(Double.parseDouble(bowl1.getEconomy()) - Double.parseDouble((bowl2.getEconomy())));
+			return (int) value;
+			
+		case BOWL_SR_AND_ECON:
+			if(bowl1.getStrikeRate().contains("-"))
+				bowl1.setStrikeRate("999999");
+			value =  setValue(Double.parseDouble(bowl1.getStrikeRate()) - Double.parseDouble((bowl2.getStrikeRate())));
+			if (value == 0) {
+				if(bowl1.getAvg().contains("-"))
+					bowl1.setAvg("999999");
+				return (int) setValue(Double.parseDouble(bowl1.getAvg()) - Double.parseDouble((bowl1.getAvg())));
+			} 
 			return (int) value;
 		}
 		return 0;
