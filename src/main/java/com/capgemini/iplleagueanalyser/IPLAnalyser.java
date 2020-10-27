@@ -16,8 +16,8 @@ import com.capgemini.iplleagueanalyser.model.Bowling;
 import com.capgemini.iplleagueanalyser.service.FlexibleSort;
 import com.opencsv.exceptions.CsvException;
 
-public class IPLAnalyser {
-	List<Batting> statsList;
+public class IPLAnalyser <T> {
+	List<T> statsList;
 
 	public int loadData(String dataPath, String fileType) throws IPLAnaylserException {
 		try (Reader reader = Files.newBufferedReader(Paths.get(dataPath));) {
@@ -35,7 +35,7 @@ public class IPLAnalyser {
 		}
 	}
 
-	public <T> List<T> getSortedList(FlexibleSort.Order order, String playerType) throws IPLAnaylserException {
+	public List<T> getSortedList(FlexibleSort.Order order, String playerType) throws IPLAnaylserException {
 		FlexibleSort flexibleSort = new FlexibleSort(order);
 		List<T> sortedList = (List<T>) statsList;
 		Collections.sort(sortedList, flexibleSort);
