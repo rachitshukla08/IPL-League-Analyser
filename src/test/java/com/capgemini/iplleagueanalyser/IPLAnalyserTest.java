@@ -138,8 +138,8 @@ public class IPLAnalyserTest {
 	public void givenBattingAndBowlingData_ShouldReturnCricketersWithBestBattingBowlingAvg()
 			throws IPLAnaylserException {
 		iplAnalyser.loadData(BATTING_DATA_PATH,"Batting");
-		iplAnalyser.loadData(BOWLING_DATA_PATH,"Bowling");
 		sortedBattingList = iplAnalyser.getSortedList(FlexibleSort.Order.BAT_AVG, "Batsman");
+		iplAnalyser.loadData(BOWLING_DATA_PATH,"Bowling");
 		sortedBowlingList = iplAnalyser.getSortedList(FlexibleSort.Order.BOWL_AVG, "Bowler");
 		assertEquals("83.2,11", sortedBattingList.get(0).getAvg() + "," + sortedBowlingList.get(0).getAvg());
 	}
