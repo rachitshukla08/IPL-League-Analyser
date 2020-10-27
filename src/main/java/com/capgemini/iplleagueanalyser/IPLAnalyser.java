@@ -18,12 +18,10 @@ import com.opencsv.exceptions.CsvException;
 
 public class IPLAnalyser {
 	List<Batting> statsList;
-	List<Bowling> bowlingList;
 
 	public int loadData(String dataPath, String fileType) throws IPLAnaylserException {
 		try (Reader reader = Files.newBufferedReader(Paths.get(dataPath));) {
 			ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
-
 			try {
 				statsList = csvBuilder.getCSVFileList(reader, IPLAnalyserAdapter.getClass(fileType));
 				return statsList.size();
