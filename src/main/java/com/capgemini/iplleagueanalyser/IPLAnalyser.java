@@ -23,7 +23,7 @@ public class IPLAnalyser <T> {
 		try (Reader reader = Files.newBufferedReader(Paths.get(dataPath));) {
 			ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
 			try {
-				statsList = csvBuilder.getCSVFileList(reader, IPLAnalyserAdapter.getClass(fileType));
+				statsList = csvBuilder.getCSVFileList(reader,new IPLAnalyserAdapter().getClass(fileType));
 				return statsList.size();
 			} catch (CsvException e) {
 				throw new IPLAnaylserException("Invalid class", IPLAnaylserException.ExceptionType.INVALID_CLASS_TYPE);
