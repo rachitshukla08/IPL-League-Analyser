@@ -19,6 +19,12 @@ import com.opencsv.exceptions.CsvException;
 public class IPLAnalyser <T> {
 	List<T> statsList;
 
+	/**
+	 * @param dataPath
+	 * @param fileType
+	 * @return number of entries in loaded data
+	 * @throws IPLAnaylserException
+	 */
 	public int loadData(String dataPath, String fileType) throws IPLAnaylserException {
 		try (Reader reader = Files.newBufferedReader(Paths.get(dataPath));) {
 			ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
@@ -35,6 +41,12 @@ public class IPLAnalyser <T> {
 		}
 	}
 
+	/**
+	 * @param order
+	 * @param playerType
+	 * @return sorted list
+	 * @throws IPLAnaylserException
+	 */
 	public List<T> getSortedList(FlexibleSort.Order order, String playerType) throws IPLAnaylserException {
 		FlexibleSort flexibleSort = new FlexibleSort(order);
 		List<T> sortedList = (List<T>) statsList;
@@ -44,6 +56,12 @@ public class IPLAnalyser <T> {
 		return sortedList;
 	}
 
+	/**
+	 * @param <T>
+	 * @param list
+	 * @param order
+	 * @return filtered list
+	 */
 	private static <T> List<T> filterList(List<T> list, FlexibleSort.Order order) {
 		if (list.get(0).getClass().equals(Batting.class)) {
 			List<Batting> filteredList = (List<Batting>) list;
